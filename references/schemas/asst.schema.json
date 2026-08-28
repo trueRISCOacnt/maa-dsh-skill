@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/MaaAssistantArknights/maa-cli/raw/v0.5.3/crates/maa-cli/schemas/asst.schema.json",
+  "type": "object",
+  "properties": {
+    "connection": {
+      "type": "object",
+      "properties": {
+        "preset": {
+          "type": "string",
+          "enum": ["ADB", "PlayCover", "MuMuPro", "Waydroid"],
+          "default": "ADB"
+        },
+        "adb_path": {
+          "type": "string",
+          "format": "path",
+          "default": "adb"
+        },
+        "address": { "type": "string" },
+        "config": { "type": "string" }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "properties": {
+        "global_resource": { "$ref": "#/definitions/globalResource" },
+        "platform_diff_resource": {
+          "$ref": "#/definitions/platformDiffResource"
+        },
+        "user_resource": { "type": "boolean", "default": false }
+      }
+    },
+    "static_options": {
+      "type": "object",
+      "properties": {
+        "cpu_ocr": { "type": "boolean" },
+        "gpu_ocr": { "type": "integer" }
+      }
+    },
+    "instance_options": {
+      "type": "object",
+      "properties": {
+        "touch_mode": { "$ref": "#/definitions/touchMode" },
+        "deployment_with_pause": { "type": "boolean" },
+        "adb_lite_enabled": { "type": "boolean" },
+        "kill_adb_on_exit": { "type": "boolean" }
+      }
+    }
+  },
+  "definitions": {
+    "adbConnection": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "ADB" },
+        "adb_path": { "type": "string", "format": "path" },
+        "device": { "type": "string" },
+        "config": { "type": "string" }
+      },
+      "required": ["type"]
+    },
+    "playToolsConnection": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "PlayTools" },
+        "address": { "type": "string" },
+        "config": { "type": "string" }
+      },
+      "required": ["type"]
+    },
+    "globalResource": {
+      "type": "string",
+      "enum": ["txwy", "YoStarEN", "YoStarJP", "YoStarKR"]
+    },
+    "platformDiffResource": {
+      "type": "string",
+      "enum": ["iOS"]
+    },
+    "touchMode": {
+      "type": "string",
+      "enum": ["ADB", "MiniTouch", "MaaTouch", "MacPlayTools", "MaaFwAdb"],
+      "default": "ADB"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH maa-init 1  "init " 
+.SH NAME
+maa\-init \- Initialize configurations for maa\-cli
+.SH SYNOPSIS
+\fBmaa init\fR [\fB\-n\fR|\fB\-\-name\fR] [\fB\-f\fR|\fB\-\-format\fR] [\fB\-\-force\fR] [\fB\-\-batch\fR] [\fB\-v\fR|\fB\-\-verbose\fR]... [\fB\-q\fR|\fB\-\-quiet\fR]... [\fB\-\-log\-file\fR] [\fB\-h\fR|\fB\-\-help\fR] 
+.SH DESCRIPTION
+Initialize configurations for maa\-cli
+.SH OPTIONS
+.TP
+\fB\-n\fR, \fB\-\-name\fR \fI<NAME>\fR
+Name of the profile
+
+The name of the profile to initialize. If not specified, the default profile will be initialized.
+.TP
+\fB\-f\fR, \fB\-\-format\fR \fI<FORMAT>\fR
+Format of the configuration file
+
+The type of the configuration file to save can be one of "toml", "yaml" and "json". If not specified, default to "json".
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+json
+.IP \(bu 2
+yaml
+.IP \(bu 2
+toml
+.RE
+.TP
+\fB\-\-force\fR
+Force to initialize even if the profile already exists
+.TP
+\fB\-\-batch\fR
+Enable batch mode
+
+If there are some input parameters in the task file, some prompts will be displayed to ask for input. In batch mode, the prompts will be skipped, and parameters will be set to default values.
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Increase verbosity, repeat for more verbosity
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+Decrease verbosity, repeat for more quiet
+.TP
+\fB\-\-log\-file\fR[=\fI<PATH>\fR]
+Redirect log to file instead of stderr
+
+If no log file is specified, the log will be written to $(maa dir log)/YYYY/MM/DD/HH:MM:SS.log.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)

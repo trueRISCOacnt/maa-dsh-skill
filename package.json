@@ -1,0 +1,30 @@
+{
+  "name": "maa-dsh-skill",
+  "version": "0.0.1-rc5",
+  "description": "MAA (MaaAssistantArknights) automation skill for DeepSeek Harness — drives maa-cli / MaaCore to automate Arknights tasks (fight, roguelike, reclamation, copilot, infrast, recruit, ...).",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "SKILL.md",
+    "README.md",
+    "README-full.md",
+    "PACKAGING.md",
+    "references/",
+    "scripts/",
+    "templates/"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

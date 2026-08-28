@@ -1,0 +1,58 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH maa-self-update 1  "update " 
+.SH NAME
+maa\-self\-update \- Update maa\-cli self
+.SH SYNOPSIS
+\fBmaa self update\fR [\fB\-\-api\-url\fR] [\fB\-\-download\-url\fR] [\fB\-\-batch\fR] [\fB\-v\fR|\fB\-\-verbose\fR]... [\fB\-q\fR|\fB\-\-quiet\fR]... [\fB\-\-log\-file\fR] [\fB\-h\fR|\fB\-\-help\fR] [\fICHANNEL\fR] 
+.SH DESCRIPTION
+Update maa\-cli self
+.PP
+This command will download prebuilt binary of maa\-cli, and install them to it current directory.
+.SH OPTIONS
+.TP
+\fB\-\-api\-url\fR \fI<API_URL>\fR
+Url of api to get version information
+
+This flag is used to set the URL of api to get version information. Default to https://github.com/MaaAssistantArknights/maa\-cli/raw/version/.
+.TP
+\fB\-\-download\-url\fR \fI<DOWNLOAD_URL>\fR
+Url of download to download prebuilt CLI binary
+
+This flag is used to set the URL of download to download prebuilt CLI binary. Default to https://github.com/MaaAssistantArknights/maa\-cli/releases/download/.
+.TP
+\fB\-\-batch\fR
+Enable batch mode
+
+If there are some input parameters in the task file, some prompts will be displayed to ask for input. In batch mode, the prompts will be skipped, and parameters will be set to default values.
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Increase verbosity, repeat for more verbosity
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+Decrease verbosity, repeat for more quiet
+.TP
+\fB\-\-log\-file\fR[=\fI<PATH>\fR]
+Redirect log to file instead of stderr
+
+If no log file is specified, the log will be written to $(maa dir log)/YYYY/MM/DD/HH:MM:SS.log.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+[\fICHANNEL\fR]
+Channel to download prebuilt CLI binary
+
+There are two channels of maa\-cli prebuilt binary, stable and alpha (which means nightly).
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+stable
+.IP \(bu 2
+beta
+.IP \(bu 2
+alpha
+.RE

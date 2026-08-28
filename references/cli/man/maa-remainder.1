@@ -1,0 +1,37 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH maa-remainder 1  "remainder " 
+.SH NAME
+maa\-remainder \- Get the remainder of given divisor and current date
+.SH SYNOPSIS
+\fBmaa remainder\fR [\fB\-\-timezone\fR] [\fB\-\-batch\fR] [\fB\-v\fR|\fB\-\-verbose\fR]... [\fB\-q\fR|\fB\-\-quiet\fR]... [\fB\-\-log\-file\fR] [\fB\-h\fR|\fB\-\-help\fR] <\fIDIVISOR\fR> 
+.SH DESCRIPTION
+Get the remainder of given divisor and current date
+.PP
+This command is used to calculate the value of remainder. Which is may helpful to fill remainder in task condition.
+.SH OPTIONS
+.TP
+\fB\-\-timezone\fR \fI<TIMEZONE>\fR
+Time zone of the date
+.TP
+\fB\-\-batch\fR
+Enable batch mode
+
+If there are some input parameters in the task file, some prompts will be displayed to ask for input. In batch mode, the prompts will be skipped, and parameters will be set to default values.
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Increase verbosity, repeat for more verbosity
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+Decrease verbosity, repeat for more quiet
+.TP
+\fB\-\-log\-file\fR[=\fI<PATH>\fR]
+Redirect log to file instead of stderr
+
+If no log file is specified, the log will be written to $(maa dir log)/YYYY/MM/DD/HH:MM:SS.log.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+<\fIDIVISOR\fR>
+The value of divisor

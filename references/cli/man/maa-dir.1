@@ -1,0 +1,52 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH maa-dir 1  "dir " 
+.SH NAME
+maa\-dir \- Print path of maa directories
+.SH SYNOPSIS
+\fBmaa dir\fR [\fB\-\-batch\fR] [\fB\-v\fR|\fB\-\-verbose\fR]... [\fB\-q\fR|\fB\-\-quiet\fR]... [\fB\-\-log\-file\fR] [\fB\-h\fR|\fB\-\-help\fR] <\fIDIR\fR> 
+.SH DESCRIPTION
+Print path of maa directories
+.PP
+This command will print the path used by maa\-cli. Some of these paths are used by maa\-core and maa\-run.
+.SH OPTIONS
+.TP
+\fB\-\-batch\fR
+Enable batch mode
+
+If there are some input parameters in the task file, some prompts will be displayed to ask for input. In batch mode, the prompts will be skipped, and parameters will be set to default values.
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Increase verbosity, repeat for more verbosity
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+Decrease verbosity, repeat for more quiet
+.TP
+\fB\-\-log\-file\fR[=\fI<PATH>\fR]
+Redirect log to file instead of stderr
+
+If no log file is specified, the log will be written to $(maa dir log)/YYYY/MM/DD/HH:MM:SS.log.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+<\fIDIR\fR>
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+data: Directory of maa\-cli\*(Aqs data
+.IP \(bu 2
+library: Directory of maa\-cli\*(Aqs dynamic library
+.IP \(bu 2
+config: Directory of maa\-cli\*(Aqs config
+.IP \(bu 2
+cache: Directory of maa\-cli\*(Aqs cache
+.IP \(bu 2
+resource: Directory of MaaCore\*(Aqs resource
+.IP \(bu 2
+hot\-update: Directory of MaaCore\*(Aqs hot update
+.IP \(bu 2
+log: Directory of MaaCore\*(Aqs log
+.RE

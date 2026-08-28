@@ -1,0 +1,46 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH maa-cleanup 1  "cleanup " 
+.SH NAME
+maa\-cleanup \- Clearing the caches of maa\-cli and maa core
+.SH SYNOPSIS
+\fBmaa cleanup\fR [\fB\-\-batch\fR] [\fB\-v\fR|\fB\-\-verbose\fR]... [\fB\-q\fR|\fB\-\-quiet\fR]... [\fB\-\-log\-file\fR] [\fB\-h\fR|\fB\-\-help\fR] [\fITARGETS\fR] 
+.SH DESCRIPTION
+Clearing the caches of maa\-cli and maa core
+.SH OPTIONS
+.TP
+\fB\-\-batch\fR
+Enable batch mode
+
+If there are some input parameters in the task file, some prompts will be displayed to ask for input. In batch mode, the prompts will be skipped, and parameters will be set to default values.
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Increase verbosity, repeat for more verbosity
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+Decrease verbosity, repeat for more quiet
+.TP
+\fB\-\-log\-file\fR[=\fI<PATH>\fR]
+Redirect log to file instead of stderr
+
+If no log file is specified, the log will be written to $(maa dir log)/YYYY/MM/DD/HH:MM:SS.log.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+[\fITARGETS\fR]
+Specify the path for deletion
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+cli\-cache: Cache files for maa\-cli
+.IP \(bu 2
+core\-cache: Cache files for MaaCore
+.IP \(bu 2
+debug: Debug files (including log and other debug files)
+.IP \(bu 2
+log: Log files (both for MaaCore and maa\-cli)
+.RE

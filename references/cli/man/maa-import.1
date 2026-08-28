@@ -1,0 +1,78 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH maa-import 1  "import " 
+.SH NAME
+maa\-import \- Import configuration files from a local path or a remote URL
+.SH SYNOPSIS
+\fBmaa import\fR [\fB\-n\fR|\fB\-\-name\fR] [\fB\-f\fR|\fB\-\-force\fR] [\fB\-t\fR|\fB\-\-config\-type\fR] [\fB\-\-batch\fR] [\fB\-v\fR|\fB\-\-verbose\fR]... [\fB\-q\fR|\fB\-\-quiet\fR]... [\fB\-\-log\-file\fR] [\fB\-h\fR|\fB\-\-help\fR] <\fISRC\fR> 
+.SH DESCRIPTION
+Import configuration files from a local path or a remote URL
+.PP
+This command allows you to import various types of configuration files into the `maa\-cli`
+config directory. It can be used to add new tasks, profiles, and other configurations.
+.SH OPTIONS
+.TP
+\fB\-n\fR, \fB\-\-name\fR \fI<NAME>\fR
+The desired name for the imported configuration file.
+
+If not specified, the filename will be derived from the source path or URL. This is particularly useful when importing from a URL that doesn\*(Aqt have a clear filename.
+.TP
+\fB\-f\fR, \fB\-\-force\fR
+Force the import operation even if a file with the same name already exists.
+
+For CLI\-read configurations, this also applies to files with the same stem but a different extension.
+.TP
+\fB\-t\fR, \fB\-\-config\-type\fR \fI<CONFIG_TYPE>\fR [default: task]
+The category of the configuration file, which determines its storage location and validation rules
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+cli: CLI configuration file
+.IP \(bu 2
+profile: Assistant/Profile configuration
+.IP \(bu 2
+task: Task configuration
+.IP \(bu 2
+infrast: Infrastructure configuration
+.IP \(bu 2
+resource: Resource configuration
+.IP \(bu 2
+copilot: Copilot configuration
+.IP \(bu 2
+sss\-copilot: SSSCopilot configuration
+.IP \(bu 2
+paradox\-copilot: ParadoxCopilot configuration
+.RE
+.TP
+\fB\-\-batch\fR
+Enable batch mode
+
+If there are some input parameters in the task file, some prompts will be displayed to ask for input. In batch mode, the prompts will be skipped, and parameters will be set to default values.
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Increase verbosity, repeat for more verbosity
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+Decrease verbosity, repeat for more quiet
+.TP
+\fB\-\-log\-file\fR[=\fI<PATH>\fR]
+Redirect log to file instead of stderr
+
+If no log file is specified, the log will be written to $(maa dir log)/YYYY/MM/DD/HH:MM:SS.log.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+<\fISRC\fR>
+The source of the configuration file to be imported
+
+This can be a local file path or a remote HTTP(S) URL.
+
+When importing from a URL, be sure to only use trusted sources. The file will be downloaded and placed in your configuration directory.
+
+If you are importing from a URL that does not have a clear filename in the path (e.g., a URL with query parameters), you should use the \-\-name option to specify a filename for the imported configuration.
+
+When importing a local file that is a symbolic link, the contents of the target file will be copied, not the link itself.

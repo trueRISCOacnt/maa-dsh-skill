@@ -1,0 +1,95 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH maa-ssscopilot 1  "ssscopilot " 
+.SH NAME
+maa\-ssscopilot \- Run SSSCopilot task
+.SH SYNOPSIS
+\fBmaa ssscopilot\fR [\fB\-\-loop\-times\fR] [\fB\-a\fR|\fB\-\-addr\fR] [\fB\-p\fR|\fB\-\-profile\fR] [\fB\-\-user\-resource\fR] [\fB\-\-dry\-run\fR] [\fB\-\-no\-summary\fR] [\fB\-\-no\-auto\-reconnect\fR] [\fB\-\-batch\fR] [\fB\-v\fR|\fB\-\-verbose\fR]... [\fB\-q\fR|\fB\-\-quiet\fR]... [\fB\-\-log\-file\fR] [\fB\-h\fR|\fB\-\-help\fR] <\fIURI\fR> 
+.SH DESCRIPTION
+Run SSSCopilot task
+.SH OPTIONS
+.TP
+\fB\-\-loop\-times\fR \fI<LOOP_TIMES>\fR [default: 1]
+Loop times
+.TP
+\fB\-a\fR, \fB\-\-addr\fR \fI<ADDR>\fR
+ADB serial number of device or MaaTools address set in PlayCover
+
+By default, MaaCore connects to game with ADB,
+and this parameter is the serial number of the device
+(default to `emulator\-5554` if not specified here and not set in config file).
+And if you want to use PlayCover,
+you need to set the connection type to PlayCover in the config file
+and then you can specify the address of MaaTools here.
+.TP
+\fB\-p\fR, \fB\-\-profile\fR \fI<PROFILE>\fR
+Profile (asst config file) name
+
+A profile is a config file that contains the configuration passed to MaaCore.
+By default, we will try to load the config file `$MAA_CONFIG_DIR/profiles/default.toml`.
+If the file does not exist, we will try to load the config file `$MAA_CONFIG_DIR/asst.toml`
+for backward compatibility, which is the old config file name.
+If you want to use another config file, you can specify the profile name here.
+The config file should be placed in the directory `$MAA_CONFIG_DIR/profiles/`.
+.TP
+\fB\-\-user\-resource\fR
+Load resources from the config directory
+
+By default, MaaCore loads resources from the resource installed with MaaCore.
+If you want to modify some configuration of MaaCore or you want to use your own resources,
+you can use this option to load resources from the `resource` directory,
+which is a subdirectory of the config directory.
+
+This option can also be enabled by setting the value of the key `user_resource` to true
+in the asst configure file `$MAA_CONFIG_DIR/asst.toml`.
+
+Note:
+CLI will load resources shipped with MaaCore firstly,
+then some client specific or platform specific when needed,
+lastly, it will load resources from the config directory.
+MaaCore will overwrite the resources loaded before,
+if there are some resources with the same name.
+Use at your own risk!
+.TP
+\fB\-\-dry\-run\fR
+Parse the your config but do not connect to the game
+
+This option is useful when you want to check your config file.
+It will parse your config file and set the log level to debug.
+If there are some errors in your config file,
+it will print the error message and exit.
+.TP
+\fB\-\-no\-summary\fR
+Do not display task summary
+
+By default, maa will display task summary after all tasks are finished.
+If you want to disable this behavior, you can use this option.
+.TP
+\fB\-\-no\-auto\-reconnect\fR
+Do not reconnect when game loses connection to server
+
+By default, maa will automatically reconnect when the game client
+loses connection to the game server. Use this option to
+disable this behavior for this run.
+.TP
+\fB\-\-batch\fR
+Enable batch mode
+
+If there are some input parameters in the task file, some prompts will be displayed to ask for input. In batch mode, the prompts will be skipped, and parameters will be set to default values.
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Increase verbosity, repeat for more verbosity
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+Decrease verbosity, repeat for more quiet
+.TP
+\fB\-\-log\-file\fR[=\fI<PATH>\fR]
+Redirect log to file instead of stderr
+
+If no log file is specified, the log will be written to $(maa dir log)/YYYY/MM/DD/HH:MM:SS.log.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+<\fIURI\fR>
+

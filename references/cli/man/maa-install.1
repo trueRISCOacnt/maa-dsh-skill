@@ -1,0 +1,68 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH maa-install 1  "install " 
+.SH NAME
+maa\-install \- Install maa maa_core and resources
+.SH SYNOPSIS
+\fBmaa install\fR [\fB\-\-no\-resource\fR] [\fB\-t\fR|\fB\-\-test\-time\fR] [\fB\-\-api\-url\fR] [\fB\-f\fR|\fB\-\-force\fR] [\fB\-\-batch\fR] [\fB\-v\fR|\fB\-\-verbose\fR]... [\fB\-q\fR|\fB\-\-quiet\fR]... [\fB\-\-log\-file\fR] [\fB\-h\fR|\fB\-\-help\fR] [\fICHANNEL\fR] 
+.SH DESCRIPTION
+Install maa maa_core and resources
+.PP
+This command will install maa\-core and resources by downloading prebuilt packages. Note: If the maa\-core and resource are already installed, please update them by maa\-cli update. Note: If you want to install maa\-run, please use maa\-cli self install.
+.SH OPTIONS
+.TP
+\fB\-\-no\-resource\fR
+Do not install resource
+
+By default, resources are shipped with maa\-core, and we will install them when installing maa\-core. If you do not want to install resource, you can use this flag to disable it. You can also configure the default value in the cli configure file $MAA_CONFIG_DIR/cli.toml with the key maa_core.component.resource; set it to false to disable installing resource by default. This is useful when you want to install maa\-core only. For my own, I will use this flag to install maa\-core, because I use the latest resource from github, and this flag can avoid the resource being overwritten. Note: if you use resources that too new or too old, you may encounter some problems. Use at your own risk.
+.TP
+\fB\-t\fR, \fB\-\-test\-time\fR \fI<TEST_TIME>\fR
+Time to test download speed
+
+There are several mirrors of maa\-core prebuilt packages. This command will test the download speed of these mirrors, and choose the fastest one to download. This flag is used to set the time in seconds to test download speed. If test time is 0, speed test will be skipped.
+.TP
+\fB\-\-api\-url\fR \fI<API_URL>\fR
+URL of api to get version information
+
+This flag is used to set the URL of api to get version information. It can also be changed by environment variable MAA_API_URL.
+.TP
+\fB\-f\fR, \fB\-\-force\fR
+Force to install even if the maa and resource already exists
+
+If the maa\-core and resource already exists, we will not install them again by default. If you want to install them again, please use this flag. This flag is useful when the installation is failed, and you want to install them again. If you want to update the maa\-core or resource, please use maa\-cli update instead.
+.TP
+\fB\-\-batch\fR
+Enable batch mode
+
+If there are some input parameters in the task file, some prompts will be displayed to ask for input. In batch mode, the prompts will be skipped, and parameters will be set to default values.
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Increase verbosity, repeat for more verbosity
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+Decrease verbosity, repeat for more quiet
+.TP
+\fB\-\-log\-file\fR[=\fI<PATH>\fR]
+Redirect log to file instead of stderr
+
+If no log file is specified, the log will be written to $(maa dir log)/YYYY/MM/DD/HH:MM:SS.log.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+[\fICHANNEL\fR]
+Channel to download prebuilt package
+
+There are three channels of maa\-core prebuilt packages, stable, beta and alpha. The default channel is stable, you can use this flag to change the channel. If you want to use the latest features of maa\-core, you can use beta or alpha channel. You can also configure the default channel in the cli configure file $MAA_CONFIG_DIR/cli.toml with the key maa_core.channel. Note: the alpha channel is only available for windows.
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+stable
+.IP \(bu 2
+beta
+.IP \(bu 2
+alpha
+.RE
