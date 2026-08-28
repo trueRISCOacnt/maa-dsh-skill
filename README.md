@@ -15,17 +15,24 @@
 
 ## 部署方式
 
-以下两种部署方式的具体步骤将在后续版本中补充：
+> 两种方式的详细步骤见[完整指引](./README-full.md)「部署方式」章节；以下为简要步骤。
 
-### 方式一：使用 npm 安装
+### 方式一：使用 npm 安装（DSH 插件 Bundle）
 
-<!-- TODO: 待填写 `dsh plugin add` 方式的具体步骤 -->
+把技能作为 **DSH 插件 Bundle** 装入 DSH profile，插件启动时自动把包内 `SKILL.md` 注册为运行时技能，AI 助手即可直接加载：
 
-### 方式二：直接复制文件
+```bash
+dsh plugin --profile web add maa-dsh-skill          # registry 包名；也支持本地目录 / .tgz
+dsh --profile web --dump-config                     # 验证：组合树中出现 `# == maa-dsh-skill` 层
+```
 
-<!-- TODO: 待填写直接复制文件方式的具体步骤 -->
+更新 / 卸载：`dsh plugin --profile web update|remove maa-dsh-skill`。
 
-> 💡 在此之前，可先按[完整指引](./README-full.md)中的「安装到 DSH」/「在其它电脑上使用」章节手动部署。
+### 方式二：直接复制文件（从 GitHub Releases 下载）
+
+1. 从本技能项目的 **GitHub Releases** 页面下载最新版 `MAA-dsh-skill-v<版本>.zip`，解压后得到顶层目录 `maa-dsh-skill/`；
+2. 将 `maa-dsh-skill/` 复制到 DSH 的 skill 发现根目录（用户级：`~/.dsh/skills/maa-dsh-skill`；项目级：`<项目根>/.dsh/skills/maa-dsh-skill`）；
+3. 按下方「快速开始」完成加载与初始化。
 
 ## 快速开始
 

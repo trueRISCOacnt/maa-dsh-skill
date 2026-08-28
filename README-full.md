@@ -42,9 +42,49 @@ Skill 的发现根目录（按优先级）：
 
 当前工作区下的 `.dsh/skills/` 已直接被当前 DSH 会话发现（技能目录中可见 `maa-dsh-skill`）。如需全局使用，将 `maa-dsh-skill/` 整个目录复制到 `~/.dsh/skills/` 即可。
 
-## 在其它电脑上使用（分发）
+## 部署方式（在其它电脑上使用）
 
-**第一步：拷贝。** 把 `MAA-dsh-skill-v<版本>.zip` 复制到目标电脑（U 盘 / 网盘 / `scp` / git 均可）并解压，得到顶层目录 `maa-dsh-skill`。
+### 方式一：使用 npm 安装（DSH 插件 Bundle）
+
+把本技能作为 **DSH 插件 Bundle** 装入 DSH profile：安装后插件会在 profile 启动时把包内 `SKILL.md` 注册为「运行时技能」，AI 助手即可在会话中直接加载该技能。
+
+**前置条件**：目标电脑已安装 DSH 与 [pnpm](https://pnpm.io/)（`dsh plugin` 通过 pnpm 安装插件）。
+
+**第一步：获取包。** 任选其一：
+
+- 从 npm registry（若已发布）：包名 `maa-dsh-skill`；
+- 本地目录 / tarball：解压 `MAA-dsh-skill-v<版本>.zip` 得到的 `maa-dsh-skill/` 目录，或 `npm pack` 生成的 `maa-dsh-skill-<版本>.tgz`。
+
+**第二步：安装到 profile。**
+
+```bash
+dsh plugin --profile web add maa-dsh-skill                     # registry 包名
+dsh plugin --profile web add ./maa-dsh-skill                    # 本地目录
+dsh plugin --profile web add ./maa-dsh-skill-0.0.1-rc5.tgz      # npm tarball
+```
+
+（`web` 为默认 profile 名，首次使用会自动初始化；安装成功且包声明了 `dsh.bundle` 时，`dsh plugin` 会自动把包加入 profile 的 `dsh.profile.bundles` 层列表。）
+
+**第三步：验证。**
+
+```bash
+dsh --profile web --dump-config     # 组合树中应出现 `# == maa-dsh-skill` 层
+```
+
+启动 profile 后，日志出现 `[maa-dsh-skill] Skill loaded!` 与 `[maa-dsh-skill] skill "maa-dsh-skill" registered ...` 即注册成功（插件从包内读取 `SKILL.md` 注册为运行时技能）。
+
+**更新 / 卸载。**
+
+```bash
+dsh plugin --profile web update maa-dsh-skill
+dsh plugin --profile web remove maa-dsh-skill
+```
+
+> 💡 npm 方式与复制文件方式（方式二）可并存：若同一技能同时存在于 skill 发现根，文件系统技能优先，插件注册的同名技能会被注册表自动忽略，互不冲突。
+
+### 方式二：直接复制文件（从 GitHub Releases 下载）
+
+**第一步：下载。** 从本技能项目的 **GitHub Releases** 页面下载最新版 `MAA-dsh-skill-v<版本>.zip`（发布者随每个版本上传该压缩包），解压后得到顶层目录 `maa-dsh-skill/`。
 
 **第二步：安装 Skill。** 在目标电脑上把 `maa-dsh-skill` 文件夹放到 DSH 的 skill 发现根目录之一：
 
