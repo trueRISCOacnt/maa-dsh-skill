@@ -1,6 +1,6 @@
 # MAA-dsh-skill — 完整指引
 
-> 📦 **技能版本：0.0.1-rc5**，适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）。
+> 📦 **技能版本：0.0.1-rc6**，适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）。
 >
 > 📄 本文档是**完整指引**（原 README，随版本保留为详细说明）；简版项目 README（含部署方式）见 [`README.md`](./README.md)。
 
@@ -50,22 +50,30 @@ Skill 的发现根目录（按优先级）：
 
 **前置条件**：目标电脑已安装 DSH 与 [pnpm](https://pnpm.io/)（`dsh plugin` 通过 pnpm 安装插件）。
 
-**第一步：获取包。** 任选其一：
+**第一步：获取包**  
 
-- 从 npm registry（若已发布）：包名 `maa-dsh-skill`；
-- 本地目录 / tarball：解压 `MAA-dsh-skill-v<版本>.zip` 得到的 `maa-dsh-skill/` 目录，或 `npm pack` 生成的 `maa-dsh-skill-<版本>.tgz`。
+任选其一：
 
-**第二步：安装到 profile。**
+- 从 Github 上下载[最新的 Releases](https://github.com/EricsonXu114514/maa-dsh-skill/releases/latest)
+- 本地目录 / tarball：解压 `MAA-dsh-skill-v<版本>.zip` 得到的 `maa-dsh-skill/` 目录，或 `npm pack` 生成的 `maa-dsh-skill-<版本>.tgz`；
+- ~~从 npm registry（若已发布）：包名 `maa-dsh-skill`~~ 以后会有的（
+
+**第二步：安装到 profile**
 
 ```bash
-dsh plugin --profile web add maa-dsh-skill                     # registry 包名
 dsh plugin --profile web add ./maa-dsh-skill                    # 本地目录
-dsh plugin --profile web add ./maa-dsh-skill-0.0.1-rc5.tgz      # npm tarball
+dsh plugin --profile web add ./maa-dsh-skill-0.0.1-rc6.tgz      # npm tarball
+```
+
+~~若使用 npm registry：~~
+
+```bash
+dsh plugin --profile web add maa-dsh-skill                     # registry 包名，现在还无法使用
 ```
 
 （`web` 为默认 profile 名，首次使用会自动初始化；安装成功且包声明了 `dsh.bundle` 时，`dsh plugin` 会自动把包加入 profile 的 `dsh.profile.bundles` 层列表。）
 
-**第三步：验证。**
+**第三步：验证**
 
 ```bash
 dsh --profile web --dump-config     # 组合树中应出现 `# == maa-dsh-skill` 层
@@ -73,18 +81,18 @@ dsh --profile web --dump-config     # 组合树中应出现 `# == maa-dsh-skill`
 
 启动 profile 后，日志出现 `[maa-dsh-skill] Skill loaded!` 与 `[maa-dsh-skill] skill "maa-dsh-skill" registered ...` 即注册成功（插件从包内读取 `SKILL.md` 注册为运行时技能）。
 
-**更新 / 卸载。**
+**更新与卸载**
 
 ```bash
-dsh plugin --profile web update maa-dsh-skill
-dsh plugin --profile web remove maa-dsh-skill
+dsh plugin --profile web update maa-dsh-skill   #更新
+dsh plugin --profile web remove maa-dsh-skill   #卸载
 ```
 
 > 💡 npm 方式与复制文件方式（方式二）可并存：若同一技能同时存在于 skill 发现根，文件系统技能优先，插件注册的同名技能会被注册表自动忽略，互不冲突。
 
-### 方式二：直接复制文件（从 GitHub Releases 下载）
+### 方式二：直接复制文件（[从 GitHub Releases 下载](https://github.com/EricsonXu114514/maa-dsh-skill/releases/latest)）
 
-**第一步：下载。** 从本技能项目的 **GitHub Releases** 页面下载最新版 `MAA-dsh-skill-v<版本>.zip`（发布者随每个版本上传该压缩包），解压后得到顶层目录 `maa-dsh-skill/`。
+**第一步：下载。** 从本技能项目的 **GitHub Releases** 页面[下载最新版 `MAA-dsh-skill-<版本>.zip`](https://github.com/EricsonXu114514/maa-dsh-skill/releases/latest)，解压后得到顶层目录 `maa-dsh-skill/`。
 
 **第二步：安装 Skill。** 在目标电脑上把 `maa-dsh-skill` 文件夹放到 DSH 的 skill 发现根目录之一：
 
@@ -99,6 +107,20 @@ cp -r maa-dsh-skill ~/.dsh/skills/maa-dsh-skill
 ```
 
 > 目标电脑若配置了 `DSH_HOME`（如 `/opt/dsh`），用户级目录为 `$DSH_HOME/skills/maa-dsh-skill`。`.agents/skills/` 根目录同样兼容（技能发现会扫描 `.dsh/skills` 与 `.agents/skills`）。
+
+在这之后，文件夹的结构应该长这样：
+```
+%userprofile%/
+└──.dsh/
+    └──skills/
+        └──maa-dsh-skill/
+            ├── references/
+            ├── scripts/
+            ├── PACKAGING.md
+            ├── README.md
+            ├── README-full.md
+            └── SKILL.md
+```
 
 **第三步：验证。** 在 DSH 对话中发送「列出可用技能」或直接说「加载技能 maa-dsh-skill」；也可让模型运行 `scripts/maa-probe.ps1`（Windows）或 `scripts/maa-probe.sh`（Linux/macOS）探测环境。技能目录更新由 DSH 实时监测，无需重启。
 
@@ -230,6 +252,27 @@ MAA 自动化需要**通过 ADB 控制模拟器**（截图、点击、启动游�
 ## 打包发布
 
 需要把本技能打包为可分发的 zip 时，参考 [`PACKAGING.md`](./PACKAGING.md)（含 zip 命名规则、顶层目录名 `maa-dsh-skill`、放置位置与完整命令）。
+
+### 更改版本号时需修改的文件与位置
+
+当前版本为 **0.0.1-rc6**。升级 / 发布新版本时，需把下表所有位置的版本号**同步更新**（行号为当前版本的行号，文档变动后请按「位置」描述定位）：
+
+| 文件 | 位置 |
+| --- | --- |
+| `package.json` | `version` 字段（第 3 行） |
+| `SKILL.md` | frontmatter `metadata.version`（第 6 行） |
+| `SKILL.md` | 正文首行「技能版本：…」徽标（第 15 行） |
+| `SKILL.md` | 第 11 节「打包发布」示例 `0.0.1-rc6` → `MAA-dsh-skill-v0.0.1-rc6.zip`（第 538 行） |
+| `README.md` | 首行版本徽标 `v0.0.1-rc6`（第 3 行） |
+| `README-full.md`（本文件） | 首行「技能版本：…」徽标（第 3 行） |
+| `README-full.md`（本文件） | 「部署方式」中 tarball 安装示例 `maa-dsh-skill-0.0.1-rc6.tgz`（第 65 行） |
+| `PACKAGING.md` | 第 1 节 zip 命名示例 `MAA-dsh-skill-v0.0.1-rc6.zip`（第 9 行） |
+| `PACKAGING.md` | 第 3 节 PowerShell 示例 `$version = "0.0.1-rc6"`（第 33 行） |
+| `PACKAGING.md` | 第 4 节 bash 示例 `version="0.0.1-rc6"`（第 71 行） |
+
+> ⚠️ 注意：`PACKAGING.md` 第 2 节的「版本号快速检查」命令只扫描 `SKILL.md`、`README.md`、`README-full.md` 三个 Markdown 文件，**不覆盖 `package.json` 及 `PACKAGING.md` 中的示例**，改完后请自行核对上表所有位置。
+>
+> 打包发布时，GitHub Releases 的 tag 与 zip 文件名（`MAA-dsh-skill-v<版本>.zip`）也应使用同一版本号。
 
 ## 参考
 

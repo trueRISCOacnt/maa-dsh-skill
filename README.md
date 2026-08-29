@@ -1,6 +1,6 @@
 # MAA-dsh-skill
 
-> 📦 **v0.0.1-rc5** ｜ 适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）｜ Windows / Linux / macOS
+> 📦 **v0.0.1-rc6** ｜ 适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）｜ Windows / Linux / macOS
 
 基于 [MaaAssistantArknights (MAA)](https://github.com/MaaAssistantArknights/MaaAssistantArknights) 官方命令行工具 [maa-cli](https://github.com/MaaAssistantArknights/maa-cli) 构建的 **DeepSeek Harness Skill**：让 AI 助手直接驱动 MaaCore，自动化完成《明日方舟》日常任务。
 
@@ -30,17 +30,14 @@ dsh --profile web --dump-config                     # 验证：组合树中出�
 
 ### 方式二：直接复制文件（从 GitHub Releases 下载）
 
-1. 从本技能项目的 **GitHub Releases** 页面下载最新版 `MAA-dsh-skill-v<版本>.zip`，解压后得到顶层目录 `maa-dsh-skill/`；
+1. 从本技能项目的 **GitHub Releases** 页面下载[最新版](https://github.com/EricsonXu114514/maa-dsh-skill/releases/latest) `MAA-dsh-skill-<版本>.zip`，解压后得到顶层目录 `maa-dsh-skill/`；
 2. 将 `maa-dsh-skill/` 复制到 DSH 的 skill 发现根目录（用户级：`~/.dsh/skills/maa-dsh-skill`；项目级：`<项目根>/.dsh/skills/maa-dsh-skill`）；
-3. 按下方「快速开始」完成加载与初始化。
 
 ## 快速开始
 
-1. 解压本包，得到顶层目录 `maa-dsh-skill/`；
-2. 将 `maa-dsh-skill/` 复制到 DSH 的 skill 发现根目录（如 `~/.dsh/skills/maa-dsh-skill`）；
-3. 在 DSH 中加载技能：`加载技能 maa-dsh-skill`；
-4. 运行 `scripts/maa-skill-init.ps1`（Windows）或 `scripts/maa-skill-init.sh`（Linux/macOS）初始化环境；
-5. 在 DSH 中开启 **Full Access** 权限（MAA 需要通过 ADB 控制模拟器）。
+1. 在 DSH 中加载技能：`加载技能 maa-dsh-skill`；
+2. 运行 `scripts/maa-skill-init.ps1`（Windows）或 `scripts/maa-skill-init.sh`（Linux/macOS）初始化环境；
+3. 在 DSH 中开启 **Full Access** 权限（MAA 需要通过 ADB 控制模拟器）。
 
 > ⚠️ 真正执行任务前，还需安装 **MAA（MaaCore）** 与 **maa-cli** 二进制，并准备模拟器与游戏客户端——详细步骤见[完整指引](./README-full.md)。
 
