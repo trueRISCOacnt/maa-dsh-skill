@@ -24,19 +24,28 @@
 仅需一段命令：
 
 ```bash
-dsh plugin --profile web add github:trueRISCOacnt/maa-dsh-skill    # registry 包名；也支持本地目录 / .tgz
+dsh plugin --profile web add github:trueRISCOacnt/maa-dsh-skill
 ```
+
+`github:trueRISCOacnt/maa-dsh-skill`为 registry 包名；也支持本地目录 / .tgz
 
 检查是否已安装：
 
 ```bash
-dsh plugin --profile web list            # 若可以看到 maa-dsh-skill，则说明成功安装
+dsh plugin --profile web list
 ```
 
-更新与卸载：
+若可以看到 maa-dsh-skill，则说明成功安装。
+
+更新：
 
 ```bash
 dsh plugin --profile web update maa-dsh-skill   #更新
+```
+
+卸载：
+
+```bash
 dsh plugin --profile web remove maa-dsh-skill   #卸载
 ```
 

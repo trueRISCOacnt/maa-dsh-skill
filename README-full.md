@@ -71,16 +71,23 @@ dsh plugin --profile web add ./maa-dsh-skill-v0.0.1.tgz      # npm tarball
 **第三步：检查是否已安装**
 
 ```bash
-dsh plugin --profile web list            # 若可以看到 maa-dsh-skill，则说明成功安装
+dsh plugin --profile web list
 ```
+
+若可以看到 maa-dsh-skill，则说明成功安装。
 
 启动 profile 后，日志出现 `[maa-dsh-skill] Skill loaded!` 与 `[maa-dsh-skill] skill "maa-dsh-skill" registered ...` 即注册成功（插件从包内读取 `SKILL.md` 注册为运行时技能）。
 
-**更新与卸载**
+**更新**
 
 ```bash
-dsh plugin --profile web update maa-dsh-skill   #更新
-dsh plugin --profile web remove maa-dsh-skill   #卸载
+dsh plugin --profile web update maa-dsh-skill
+```
+
+**卸载**
+
+```bash
+dsh plugin --profile web remove maa-dsh-skill
 ```
 
 > 💡 npm 方式与复制文件方式（方式二）可并存：若同一技能同时存在于 skill 发现根，文件系统技能优先，插件注册的同名技能会被注册表自动忽略，互不冲突。
