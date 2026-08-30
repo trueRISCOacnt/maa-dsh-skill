@@ -40,13 +40,13 @@ dsh plugin --profile web list
 更新：
 
 ```bash
-dsh plugin --profile web update maa-dsh-skill   #更新
+dsh plugin --profile web update maa-dsh-skill
 ```
 
 卸载：
 
 ```bash
-dsh plugin --profile web remove maa-dsh-skill   #卸载
+dsh plugin --profile web remove maa-dsh-skill
 ```
 
 ### 方式二：直接复制文件（从 GitHub Releases 下载）

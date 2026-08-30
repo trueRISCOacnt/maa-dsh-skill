@@ -50,7 +50,7 @@ maa-dsh-skill/                          # 解压后顶层目录（= 安装到 .d
 
 **前置条件**：目标电脑已安装 DSH 与 [pnpm](https://pnpm.io/)（`dsh plugin` 通过 pnpm 安装插件）。
 
-**第一步：获取包**  
+#### 第一步：获取包
 
 任选其一：
 
@@ -58,17 +58,29 @@ maa-dsh-skill/                          # 解压后顶层目录（= 安装到 .d
 - 从 Github 上下载[最新的 Releases](https://github.com/EricsonXu114514/maa-dsh-skill/releases/latest)
 - 本地目录 / tarball：解压 `MAA-dsh-skill-<版本>.zip` 得到的 `maa-dsh-skill/` 目录，或 `npm pack` 生成的 `maa-dsh-skill-<版本>.tgz`；
 
-**第二步：安装到 profile**
+#### 第二步：安装到 profile
+
+**推荐使用这种方式：**
 
 ```bash
-dsh plugin --profile web add github:trueRISCOacnt/maa-dsh-skill # 推荐方式
-dsh plugin --profile web add ./maa-dsh-skill                    # 本地目录
-dsh plugin --profile web add ./maa-dsh-skill-v0.0.1.tgz      # npm tarball
+dsh plugin --profile web add github:trueRISCOacnt/maa-dsh-skill
+```
+
+如果下载到了本地目录：（./maa-dsh-skill需要替换为解压后的文件夹的文件夹地址）
+
+```bash
+dsh plugin --profile web add ./maa-dsh-skill
+```
+
+使用 npm tarball 方式安装：
+
+```bash
+dsh plugin --profile web add ./maa-dsh-skill-v0.0.1.tgz
 ```
 
 （`web` 为默认 profile 名，首次使用会自动初始化；安装成功且包声明了 `dsh.bundle` 时，`dsh plugin` 会自动把包加入 profile 的 `dsh.profile.bundles` 层列表。）
 
-**第三步：检查是否已安装**
+#### 第三步：检查是否已安装
 
 ```bash
 dsh plugin --profile web list
@@ -78,13 +90,13 @@ dsh plugin --profile web list
 
 启动 profile 后，日志出现 `[maa-dsh-skill] Skill loaded!` 与 `[maa-dsh-skill] skill "maa-dsh-skill" registered ...` 即注册成功（插件从包内读取 `SKILL.md` 注册为运行时技能）。
 
-**更新**
+#### 更新
 
 ```bash
 dsh plugin --profile web update maa-dsh-skill
 ```
 
-**卸载**
+#### 卸载
 
 ```bash
 dsh plugin --profile web remove maa-dsh-skill
@@ -98,7 +110,7 @@ dsh plugin --profile web remove maa-dsh-skill
 
 **第二步：安装 Skill。** 在目标电脑上把 `maa-dsh-skill` 文件夹放到 DSH 的 skill 发现根目录之一：
 
-```bash
+```powershell
 # 方式 A（推荐）：用户级，所有 DSH 会话可用
 #   Windows: 复制到  C:\Users\<用户名>\.dsh\skills\maa-dsh-skill
 #   Linux/macOS: 复制到  ~/.dsh/skills/maa-dsh-skill
@@ -195,14 +207,14 @@ MAA 自动化需要**通过 ADB 控制模拟器**（截图、点击、启动游�
 
 > 用户指定的默认选项（写入时间：2026-08-28）。运行 MAA 任务时默认采用以下设置；具体任务可在此基础上覆盖。可直接使用的 maa-cli 任务模板见同目录 `templates/default-options.toml`（选项 ↔ 参数对照见 `templates/default-options.md`）。
 
-**理智作战（Fight）**
+### 理智作战（Fight）
 
 | 选项 | 值 | MAA 参数 |
 | --- | --- | --- |
 | 使用药剂 | 0 | `medicine = 0` |
 | 使用源石 | 0 | `stone = 0` |
 
-**基建换班（Infrast）**
+### 基建换班（Infrast）
 
 | 选项 | 值 | MAA 参数 |
 | --- | --- | --- |
@@ -216,7 +228,7 @@ MAA 自动化需要**通过 ADB 控制模拟器**（截图、点击、启动游�
 
 > 注：`continue_training` 对应 MAA GUI「基建-训练室是否尝试连续专精」（MaaCore Infrast 任务参数，见 MaaWpfGui `AsstInfrastTask.cs` 序列化的 `continue_training` 键）。队列轮换模式下会跳过控制中枢/发电站/宿舍/办公室，`facility` 建议在 Mfg/Trade/Reception/Processing/Training 中选取。
 
-**自动肉鸽（Roguelike）**
+### 自动肉鸽（Roguelike）
 
 | 选项 | 值 | MAA 参数 |
 | --- | --- | --- |
