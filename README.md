@@ -1,8 +1,10 @@
 # MAA-dsh-skill
 
-> 📦 **v0.0.1-rc6** ｜ 适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）｜ Windows / Linux / macOS
+> 📦 **v0.0.1** ｜ 适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）｜ Windows / Linux / macOS
 
 基于 [MaaAssistantArknights (MAA)](https://github.com/MaaAssistantArknights/MaaAssistantArknights) 官方命令行工具 [maa-cli](https://github.com/MaaAssistantArknights/maa-cli) 构建的 **DeepSeek Harness Skill**：让 AI 助手直接驱动 MaaCore，自动化完成《明日方舟》日常任务。
+
+> 目前该项目仍处于早期阶段，欢迎随时提交 [issue](https://github.com/trueRISCOacnt/maa-dsh-skill/issues) 与 [PR](https://github.com/trueRISCOacnt/maa-dsh-skill/pulls) ！
 
 ## 特性
 
@@ -19,14 +21,24 @@
 
 ### 方式一：使用 npm 安装（DSH 插件 Bundle）
 
-把技能作为 **DSH 插件 Bundle** 装入 DSH profile，插件启动时自动把包内 `SKILL.md` 注册为运行时技能，AI 助手即可直接加载：
+仅需一段命令：
 
 ```bash
-dsh plugin --profile web add maa-dsh-skill          # registry 包名；也支持本地目录 / .tgz
-dsh --profile web --dump-config                     # 验证：组合树中出现 `# == maa-dsh-skill` 层
+dsh plugin --profile web add github:trueRISCOacnt/maa-dsh-skill    # registry 包名；也支持本地目录 / .tgz
 ```
 
-更新 / 卸载：`dsh plugin --profile web update|remove maa-dsh-skill`。
+检查是否已安装：
+
+```bash
+dsh plugin --profile web list            # 若可以看到 maa-dsh-skill，则说明成功安装
+```
+
+更新与卸载：
+
+```bash
+dsh plugin --profile web update maa-dsh-skill   #更新
+dsh plugin --profile web remove maa-dsh-skill   #卸载
+```
 
 ### 方式二：直接复制文件（从 GitHub Releases 下载）
 
@@ -39,7 +51,7 @@ dsh --profile web --dump-config                     # 验证：组合树中出�
 2. 运行 `scripts/maa-skill-init.ps1`（Windows）或 `scripts/maa-skill-init.sh`（Linux/macOS）初始化环境；
 3. 在 DSH 中开启 **Full Access** 权限（MAA 需要通过 ADB 控制模拟器）。
 
-> ⚠️ 真正执行任务前，还需安装 **MAA（MaaCore）** 与 **maa-cli** 二进制，并准备模拟器与游戏客户端——详细步骤见[完整指引](./README-full.md)。
+> ⚠️ 真正执行任务前，还需安装 **MAA（MaaCore）** 与 **maa-cli** 二进制，并准备模拟器与游戏客户端。详细步骤见[完整指引](./README-full.md)。
 
 ## 文档
 

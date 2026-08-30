@@ -1,10 +1,12 @@
 # MAA-dsh-skill — 完整指引
 
-> 📦 **技能版本：0.0.1-rc6**，适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）。
+> 📦 **技能版本：v0.0.1**，适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）。
 >
 > 📄 本文档是**完整指引**（原 README，随版本保留为详细说明）；简版项目 README（含部署方式）见 [`README.md`](./README.md)。
 
 基于 [MaaAssistantArknights (MAA)](https://github.com/MaaAssistantArknights/MaaAssistantArknights) 官方命令行工具 [maa-cli](https://github.com/MaaAssistantArknights/maa-cli) 构建的 DeepSeek Harness Skill，用于通过 MaaCore 自动化完成《明日方舟》游戏任务。跨平台支持 Windows / Linux / macOS。
+
+> 目前该项目仍处于早期阶段，欢迎随时提交 [issue](https://github.com/trueRISCOacnt/maa-dsh-skill/issues) 与 [PR](https://github.com/trueRISCOacnt/maa-dsh-skill/pulls) ！
 
 > MAA 主仓库 README「CLI 支持」一节指向的官方使用指南：<https://docs.maa.plus/zh-cn/manual/cli/>
 
@@ -12,35 +14,33 @@
 
 > 💡 **平台说明**：目前该 skill 适用于 **Windows**。理论上该 skill 适用于其它操作系统（Linux/macOS 脚本与路径逻辑已内置），但**尚未验证**。
 
+## 特性
+
+- 🎮 刷关卡（含连战）、集成战略、生息演算、自动抄作业
+- 🏗️ 基建收取与换班、公开招募、仓库识别
+- 🔌 自定义任务编排（多任务流水线 + 条件变体）
+- 🖥️ 模拟器自动检测与连接（MuMu / 雷电 / 蓝叠 / 夜神 / 逍遥）
+- 📚 内置 maa-cli 官方文档本地副本（中英）、MAA 集成文档、JSON Schema
+- 🧩 跨平台初始化与模拟器检测脚本（`.ps1` / `.sh`）
+
 ## 结构
 
 ```
 maa-dsh-skill/                          # 解压后顶层目录（= 安装到 .dsh/skills/ 下的 maa-dsh-skill 目录）
-├── README.md                     # 项目 README（简短，含部署方式占位）
-├── README-full.md                # 完整指引（本文件）
-├── SKILL.md                      # 技能主文件（frontmatter + 使用说明）
-├── PACKAGING.md                  # 打包发布方法（后续打包时参考）
-├── references/                   # 官方文档副本 + JSON Schema
-│   ├── zh-CN/                    # maa-dsh-skill 文档：intro / install / usage / config / faq
-│   ├── en-US/                    # 同名英文版
-│   ├── maa-official/             # MAA 官方连接/设备文档（模拟器支持矩阵、端口表、蓝叠 Hyper-V 配置）+ 集成文档 integration.html（全部任务类型与参数，意图↔指令查表用）
-│   └── schemas/                  # task / asst / cli 三个 JSON Schema
+├── README.md                            # 项目 README（简短，含部署方式占位）
+├── README-full.md                       # 完整指引（本文件）
+├── SKILL.md                             # 技能主文件（frontmatter + 使用说明）
+├── PACKAGING.md                         # 打包发布方法（后续打包时参考）
+├── references/                          # 官方文档副本 + JSON Schema
+│   ├── zh-CN/                           # maa-dsh-skill 文档：intro / install / usage / config / faq
+│   ├── en-US/                           # 同名英文版
+│   ├── maa-official/                    # MAA 官方连接/设备文档（模拟器支持矩阵、端口表、蓝叠 Hyper-V 配置）+ 集成文档 integration.html（全部任务类型与参数，意图↔指令查表用）
+│   └── schemas/                         # task / asst / cli 三个 JSON Schema
 └── scripts/
     ├── maa-probe.ps1 / .sh              # 环境探测（maa-cli / MaaCore 是否就绪）
     ├── maa-emulator-detect.ps1 / .sh    # 模拟器检测（自动 + 手动定位 + -Probe 实时端口）
     └── maa-skill-init.ps1 / .sh         # 初始化：探测 MAA/maa-cli/模拟器/权限，读写 skill-config.toml
 ```
-
-## 安装到 DSH（本机）
-
-Skill 的发现根目录（按优先级）：
-
-| 优先级 | 位置 |
-| --- | --- |
-| 项目级 | `<项目根>/.dsh/skills/`（本目录即项目根，已生效） |
-| 用户级 | `$DSH_HOME/skills/`（默认 `~/.dsh/skills/`，全会话可用） |
-
-当前工作区下的 `.dsh/skills/` 已直接被当前 DSH 会话发现（技能目录中可见 `maa-dsh-skill`）。如需全局使用，将 `maa-dsh-skill/` 整个目录复制到 `~/.dsh/skills/` 即可。
 
 ## 部署方式（在其它电脑上使用）
 
@@ -54,29 +54,24 @@ Skill 的发现根目录（按优先级）：
 
 任选其一：
 
+- 从 Git 仓库：包名 `github:trueRISCOacnt/maa-dsh-skill`
 - 从 Github 上下载[最新的 Releases](https://github.com/EricsonXu114514/maa-dsh-skill/releases/latest)
-- 本地目录 / tarball：解压 `MAA-dsh-skill-v<版本>.zip` 得到的 `maa-dsh-skill/` 目录，或 `npm pack` 生成的 `maa-dsh-skill-<版本>.tgz`；
-- ~~从 npm registry（若已发布）：包名 `maa-dsh-skill`~~ 以后会有的（
+- 本地目录 / tarball：解压 `MAA-dsh-skill-<版本>.zip` 得到的 `maa-dsh-skill/` 目录，或 `npm pack` 生成的 `maa-dsh-skill-<版本>.tgz`；
 
 **第二步：安装到 profile**
 
 ```bash
+dsh plugin --profile web add github:trueRISCOacnt/maa-dsh-skill # 推荐方式
 dsh plugin --profile web add ./maa-dsh-skill                    # 本地目录
-dsh plugin --profile web add ./maa-dsh-skill-0.0.1-rc6.tgz      # npm tarball
-```
-
-~~若使用 npm registry：~~
-
-```bash
-dsh plugin --profile web add maa-dsh-skill                     # registry 包名，现在还无法使用
+dsh plugin --profile web add ./maa-dsh-skill-v0.0.1.tgz      # npm tarball
 ```
 
 （`web` 为默认 profile 名，首次使用会自动初始化；安装成功且包声明了 `dsh.bundle` 时，`dsh plugin` 会自动把包加入 profile 的 `dsh.profile.bundles` 层列表。）
 
-**第三步：验证**
+**第三步：检查是否已安装**
 
 ```bash
-dsh --profile web --dump-config     # 组合树中应出现 `# == maa-dsh-skill` 层
+dsh plugin --profile web list            # 若可以看到 maa-dsh-skill，则说明成功安装
 ```
 
 启动 profile 后，日志出现 `[maa-dsh-skill] Skill loaded!` 与 `[maa-dsh-skill] skill "maa-dsh-skill" registered ...` 即注册成功（插件从包内读取 `SKILL.md` 注册为运行时技能）。
@@ -255,20 +250,20 @@ MAA 自动化需要**通过 ADB 控制模拟器**（截图、点击、启动游�
 
 ### 更改版本号时需修改的文件与位置
 
-当前版本为 **0.0.1-rc6**。升级 / 发布新版本时，需把下表所有位置的版本号**同步更新**（行号为当前版本的行号，文档变动后请按「位置」描述定位）：
+当前版本为 **v0.0.1**。升级 / 发布新版本时，需把下表所有位置的版本号**同步更新**（行号为当前版本的行号，文档变动后请按「位置」描述定位）：
 
 | 文件 | 位置 |
 | --- | --- |
 | `package.json` | `version` 字段（第 3 行） |
 | `SKILL.md` | frontmatter `metadata.version`（第 6 行） |
 | `SKILL.md` | 正文首行「技能版本：…」徽标（第 15 行） |
-| `SKILL.md` | 第 11 节「打包发布」示例 `0.0.1-rc6` → `MAA-dsh-skill-v0.0.1-rc6.zip`（第 538 行） |
-| `README.md` | 首行版本徽标 `v0.0.1-rc6`（第 3 行） |
+| `SKILL.md` | 第 11 节「打包发布」示例 `v0.0.1` → `MAA-dsh-skill-v0.0.1.zip`（第 538 行） |
+| `README.md` | 首行版本徽标 `v0.0.1`（第 3 行） |
 | `README-full.md`（本文件） | 首行「技能版本：…」徽标（第 3 行） |
-| `README-full.md`（本文件） | 「部署方式」中 tarball 安装示例 `maa-dsh-skill-0.0.1-rc6.tgz`（第 65 行） |
-| `PACKAGING.md` | 第 1 节 zip 命名示例 `MAA-dsh-skill-v0.0.1-rc6.zip`（第 9 行） |
-| `PACKAGING.md` | 第 3 节 PowerShell 示例 `$version = "0.0.1-rc6"`（第 33 行） |
-| `PACKAGING.md` | 第 4 节 bash 示例 `version="0.0.1-rc6"`（第 71 行） |
+| `README-full.md`（本文件） | 「部署方式」中 tarball 安装示例 `maa-dsh-skill-v0.0.1.tgz`（第 65 行） |
+| `PACKAGING.md` | 第 1 节 zip 命名示例 `MAA-dsh-skill-v0.0.1.zip`（第 9 行） |
+| `PACKAGING.md` | 第 3 节 PowerShell 示例 `$version = "v0.0.1"`（第 33 行） |
+| `PACKAGING.md` | 第 4 节 bash 示例 `version="v0.0.1"`（第 71 行） |
 
 > ⚠️ 注意：`PACKAGING.md` 第 2 节的「版本号快速检查」命令只扫描 `SKILL.md`、`README.md`、`README-full.md` 三个 Markdown 文件，**不覆盖 `package.json` 及 `PACKAGING.md` 中的示例**，改完后请自行核对上表所有位置。
 >
@@ -279,3 +274,10 @@ MAA 自动化需要**通过 ADB 控制模拟器**（截图、点击、启动游�
 - maa-cli 仓库与文档：<https://github.com/MaaAssistantArknights/maa-cli>
 - MAA CLI 使用指南：<https://docs.maa.plus/zh-cn/manual/cli/>
 - MAA 集成文档（任务类型与参数）：<https://docs.maa.plus/zh-cn/protocol/integration.html>（skill 内已内置本地副本：`maa-cli/references/maa-official/integration.html`，用于意图 ↔ 指令查表）
+
+## 致谢
+
+- 本skill几乎完全由[DeepSeek Harness](https://www.deepseek.com/harness/)使用**deepseek-v4-flash**编写
+- [MaaAssistantArknights / MAA](https://github.com/MaaAssistantArknights/MaaAssistantArknights)
+- [MaaAssistantArknights / maa-cli](https://github.com/MaaAssistantArknights/maa-cli)
+- 官方使用指南：<https://docs.maa.plus/zh-cn/manual/cli/>

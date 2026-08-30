@@ -6,7 +6,7 @@
 
 | 项 | 规则 |
 | --- | --- |
-| zip 文件名 | `MAA-dsh-skill-v<版本>.zip`，如 `MAA-dsh-skill-v0.0.1-rc6.zip` |
+| zip 文件名 | `MAA-dsh-skill-v<版本>.zip`，如 `MAA-dsh-skill-v0.0.1.zip` |
 | 解压后顶层目录名 | **`maa-dsh-skill`**（zip 内所有文件位于 `maa-dsh-skill/` 下） |
 | 放置位置 | 由发布者指定；本机惯例为桌面新建的发布文件夹（如 `Desktop\MAA-dsh-skill-release\`） |
 
@@ -21,16 +21,17 @@
 3. **无临时文件**：排除 `*.log`、`.git/`、`__pycache__/` 等不需要分发的内容。
 
 版本号快速检查（PowerShell，在 skill 目录内执行）：
-> ```powershell
-> Select-String -Path SKILL.md,README.md,README-full.md -Pattern "0\.0\.1-rc" | ForEach-Object { "$($_.Filename): $($_.Line.Trim())" }
-> ```
+
+```powershell
+Select-String -Path SKILL.md,README.md,README-full.md -Pattern "0\.0\.1-rc" | ForEach-Object { "$($_.Filename): $($_.Line.Trim())" }
+```
 
 ## 3. 打包步骤（Windows PowerShell 示例）
 
-以发布 `v0.0.1-rc6` 为例（把 `$version` 换成实际版本号即可复用）：
+以发布 `v0.0.1` 为例（把 `$version` 换成实际版本号即可复用）：
 
 ```powershell
-$version = "0.0.1-rc6"
+$version = "vv0.0.1"
 $skillSrc = "C:\Users\test\.dsh\skills\maa-dsh-skill"                      # 技能源目录
 $desktop  = [Environment]::GetFolderPath('Desktop')
 $release  = Join-Path $desktop "MAA-dsh-skill-release"                    # 桌面发布文件夹（可自定义）
@@ -68,7 +69,7 @@ Remove-Item $verify -Recurse -Force
 ## 4. Linux / macOS（bash 示例）
 
 ```bash
-version="0.0.1-rc6"
+version="v0.0.1"
 skill_src="$HOME/.dsh/skills/maa-dsh-skill"
 release="$HOME/Desktop/MAA-dsh-skill-release"
 stage="$(mktemp -d)"
