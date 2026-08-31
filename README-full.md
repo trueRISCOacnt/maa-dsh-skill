@@ -1,6 +1,6 @@
 # MAA-dsh-skill — 完整指引
 
-> 📦 **技能版本：v0.0.1**，适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）。
+> 📦 **技能版本：v0.0.2**，适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）。
 >
 > 📄 本文档是**完整指引**（原 README，随版本保留为详细说明）；简版项目 README（含部署方式）见 [`README.md`](./README.md)。
 
@@ -75,7 +75,7 @@ dsh plugin --profile web add ./maa-dsh-skill
 使用 npm tarball 方式安装：
 
 ```bash
-dsh plugin --profile web add ./maa-dsh-skill-v0.0.1.tgz
+dsh plugin --profile web add ./maa-dsh-skill-0.0.2.tgz
 ```
 
 （`web` 为默认 profile 名，首次使用会自动初始化；安装成功且包声明了 `dsh.bundle` 时，`dsh plugin` 会自动把包加入 profile 的 `dsh.profile.bundles` 层列表。）
@@ -88,7 +88,7 @@ dsh plugin --profile web list
 
 若可以看到 maa-dsh-skill，则说明成功安装。
 
-启动 profile 后，日志出现 `[maa-dsh-skill] Skill loaded!` 与 `[maa-dsh-skill] skill "maa-dsh-skill" registered ...` 即注册成功（插件从包内读取 `SKILL.md` 注册为运行时技能）。
+启动 profile 后即注册成功（插件从包内读取 `SKILL.md` 注册为运行时技能）。这两行日志默认**不打印**；插件的 `showStartupLogs` 开关等配置见「配置文件与修改」一节。
 
 #### 更新
 
@@ -149,7 +149,7 @@ cp -r maa-dsh-skill ~/.dsh/skills/maa-dsh-skill
 
 安装后运行初始化（`scripts/maa-skill-init.ps1` / `.sh`）——**初始化会同时搜索 MAA 与 maa-cli**（还探测模拟器与权限设置），并把结果保存到 skill 配置文件（Windows：`%USERPROFILE%\.dsh\maa-config\skill-config.toml`；Linux/macOS：`$MAA_CONFIG_DIR/skill-config.toml`）；首次会写入，之后每次初始化直接读取，无需重复探测：
 
-> 💡 **省时建议**：首次初始化时，如果你**知道 MAA 或 maa-cli 所在的位置**（文件夹或二进制路径），直接告诉模型或传给脚本（Windows `-MaaPath` / `-CliPath`，Linux/macOS `--maa` / `--cli`），可**省去自动搜索的时间与 token**；不知道时才由脚本自动搜索常见路径。
+> 💡 **省时建议**：首次初始化想省去自动搜索 MAA / maa-cli 的时间与 token？直接传入已知路径即可（Windows `-MaaPath` / `-CliPath`，Linux/macOS `--maa` / `--cli`），详见「配置文件与修改」一节。
 
 1. **MAA（MaaCore）**：未装时运行 `maa install`（Windows 需先装 VC++ 运行库）；已装 MAA GUI/便携版可直接复用其 MaaCore（技能 4.6 节，免下载）。
 2. **maa-cli 二进制**：Windows `winget install maa-cli` 或官方 install.ps1；macOS `brew install MaaAssistantArknights/tap/maa-cli`；Linux 包管理器或 install.sh（详见技能第 3 节）。
@@ -170,17 +170,47 @@ MAA 自动化需要**通过 ADB 控制模拟器**（截图、点击、启动游�
 - **无完整权限 → 会先提示你**需要 Full Access（说明原因），征得同意后才提权运行；
 - 以下两种情况**不再提示**，直接使用完整权限运行：
   1. 你在对话中明确告知可以使用完整权限；
-  2. 初始化时在 skill 配置文件（Windows：`%USERPROFILE%\.dsh\maa-config\skill-config.toml`；Linux/macOS：`$MAA_CONFIG_DIR/skill-config.toml`）中写明 `[permission] full_access = true`（运行 `scripts/maa-skill-init.ps1 -FullAccess` 即可写入）。
+  2. 初始化时已在 skill 配置文件（`skill-config.toml`）中写明 `[permission] full_access = true`（写入方式见「配置文件与修改」）。
 
 `maa version`、`maa dir`、`maa list`、`maa run --dry-run` 等纯本地/只读命令不需要完整权限。
 
-## 技能内容保护开关（modify_skill）
+## 配置文件与修改（集中说明）
 
-`skill-config.toml` 中的 `[permission] modify_skill` 控制 **harness / agent 是否可以更改本 skill 的内容**（SKILL.md、README.md、scripts/、references/、schemas/ 等）。
+本技能涉及两类配置文件，修改都需谨慎：
 
-- **默认 `false`**：除非用户明确要求，harness/agent 不得修改 skill 内的任何文件；
-- **该值只能由用户明确指示更改**，harness/agent 不得自行修改（初始化脚本 `maa-skill-init.ps1` / `.sh` 只会原样保留该值，不会覆盖）；
-- 用户开启方式：在对话中明确指示，或直接编辑 `%USERPROFILE%\.dsh\maa-config\skill-config.toml`（Windows）/ `$MAA_CONFIG_DIR/skill-config.toml`（Linux/macOS），将 `modify_skill` 改为 `true`。
+| 配置文件 | 位置 | 作用 |
+| --- | --- | --- |
+| **skill 配置文件** | Windows：`%USERPROFILE%\.dsh\maa-config\skill-config.toml`；Linux/macOS：`$MAA_CONFIG_DIR/skill-config.toml` | 由初始化脚本读写：MAA / maa-cli 路径、模拟器、权限开关 |
+| **DSH 插件配置** | `~/.dsh/profiles/<profile>/cordis.patch.yml` | 以 npm / DSH Bundle 方式安装时的插件级配置（如启动日志开关） |
+
+### 1. skill 配置文件（skill-config.toml）
+
+初始化脚本（`scripts/maa-skill-init.ps1` / `.sh`）探测 MAA、maa-cli、模拟器与权限设置后，把结果写入该文件；之后每次初始化直接读取，无需重复探测。可直接编辑该文件修改配置。
+
+**💡 省时建议**：首次初始化时，如果你**知道 MAA 或 maa-cli 所在的位置**（文件夹或二进制路径），直接告诉模型或传给脚本（Windows `-MaaPath` / `-CliPath`，Linux/macOS `--maa` / `--cli`），可**省去自动搜索的时间与 token**；不知道时才由脚本自动搜索常见路径。
+
+该文件 `[permission]` 段包含两个开关：
+
+| 开关 | 默认 | 含义 | 修改方式 |
+| --- | --- | --- | --- |
+| `full_access` | `false` | 是否同意运行真实任务时使用完整权限 | 运行 `scripts/maa-skill-init.ps1 -FullAccess` 写入，或直接编辑文件改为 `true` |
+| `modify_skill` | `false` | 是否允许 harness/agent 更改本 skill 的内容（SKILL.md、README.md、scripts/、references/、schemas/ 等） | 只能由用户明确指示更改；直接编辑文件改为 `true`（初始化脚本只会原样保留该值） |
+
+> 🔒 **技能内容保护（modify_skill）**：默认 `false` 时，除非用户明确要求，harness/agent 不得修改 skill 内的任何文件；该值**只能由用户明确指示更改**，harness/agent 不得自行修改（初始化脚本 `maa-skill-init.ps1` / `.sh` 只会原样保留该值，不会覆盖）。开启方式：在对话中明确指示，或直接编辑 `skill-config.toml` 将 `modify_skill` 改为 `true`。
+
+### 2. DSH 插件配置（cordis.patch.yml）
+
+仅以 npm / DSH Bundle 方式安装（「部署方式 · 方式一」）时使用。编辑 profile 的 `cordis.patch.yml`（如 `~/.dsh/profiles/web/cordis.patch.yml`）可覆盖插件配置。
+
+**启动日志开关（`showStartupLogs`）**：控制启动 dsh 时是否打印 `[maa-dsh-skill] Skill loaded!` 与 `[maa-dsh-skill] skill "maa-dsh-skill" registered ...` 两行日志，**默认 `false`（不打印）**。开启：
+
+```yaml
+- id: maa-dsh-skill
+  config:
+    showStartupLogs: true
+```
+
+保存后重启 dsh 生效；移除该 `config` 块或设为 `false` 即恢复默认。错误/警告类日志（如 SKILL.md 缺失、注册失败）不受此开关影响，始终打印。
 
 ## ⚠️ 重要：使用前请先运行一次 MAA
 
@@ -269,20 +299,20 @@ MAA 自动化需要**通过 ADB 控制模拟器**（截图、点击、启动游�
 
 ### 更改版本号时需修改的文件与位置
 
-当前版本为 **v0.0.1**。升级 / 发布新版本时，需把下表所有位置的版本号**同步更新**（行号为当前版本的行号，文档变动后请按「位置」描述定位）：
+当前版本为 **v0.0.2**。升级 / 发布新版本时，需把下表所有位置的版本号**同步更新**（行号为当前版本的行号，文档变动后请按「位置」描述定位）：
 
 | 文件 | 位置 |
 | --- | --- |
-| `package.json` | `version` 字段（第 3 行） |
+| `package.json` | `version` 字段（第 3 行）——**必须为纯 semver（如 `0.0.1`），不带 `v` 前缀**：dsh-market 等工具显示已安装版本时会自动加 `v`，若写成 `v0.0.1` 会显示成 `vv0.0.1` |
 | `SKILL.md` | frontmatter `metadata.version`（第 6 行） |
 | `SKILL.md` | 正文首行「技能版本：…」徽标（第 15 行） |
-| `SKILL.md` | 第 11 节「打包发布」示例 `v0.0.1` → `MAA-dsh-skill-v0.0.1.zip`（第 538 行） |
-| `README.md` | 首行版本徽标 `v0.0.1`（第 3 行） |
+| `SKILL.md` | 第 11 节「打包发布」示例 `v0.0.2` → `MAA-dsh-skill-v0.0.2.zip`（第 538 行） |
+| `README.md` | 首行版本徽标 `v0.0.2`（第 3 行） |
 | `README-full.md`（本文件） | 首行「技能版本：…」徽标（第 3 行） |
-| `README-full.md`（本文件） | 「部署方式」中 tarball 安装示例 `maa-dsh-skill-v0.0.1.tgz`（第 65 行） |
-| `PACKAGING.md` | 第 1 节 zip 命名示例 `MAA-dsh-skill-v0.0.1.zip`（第 9 行） |
-| `PACKAGING.md` | 第 3 节 PowerShell 示例 `$version = "v0.0.1"`（第 33 行） |
-| `PACKAGING.md` | 第 4 节 bash 示例 `version="v0.0.1"`（第 71 行） |
+| `README-full.md`（本文件） | 「部署方式」中 tarball 安装示例 `maa-dsh-skill-0.0.2.tgz`（npm pack 按 package.json 纯 semver 生成，不带 `v`） |
+| `PACKAGING.md` | 第 1 节 zip 命名示例 `MAA-dsh-skill-v0.0.2.zip`（第 9 行） |
+| `PACKAGING.md` | 第 3 节 PowerShell 示例 `$version = "v0.0.2"`（第 35 行） |
+| `PACKAGING.md` | 第 4 节 bash 示例 `version="v0.0.2"`（第 73 行） |
 
 > ⚠️ 注意：`PACKAGING.md` 第 2 节的「版本号快速检查」命令只扫描 `SKILL.md`、`README.md`、`README-full.md` 三个 Markdown 文件，**不覆盖 `package.json` 及 `PACKAGING.md` 中的示例**，改完后请自行核对上表所有位置。
 >

@@ -1,6 +1,6 @@
 # MAA-dsh-skill
 
-> 📦 **v0.0.1** ｜ 适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）｜ Windows / Linux / macOS
+> 📦 **v0.0.2** ｜ 适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）｜ Windows / Linux / macOS
 
 基于 [MaaAssistantArknights (MAA)](https://github.com/MaaAssistantArknights/MaaAssistantArknights) 官方命令行工具 [maa-cli](https://github.com/MaaAssistantArknights/maa-cli) 构建的 **DeepSeek Harness Skill**：让 AI 助手直接驱动 MaaCore，自动化完成《明日方舟》日常任务。
 
@@ -66,7 +66,7 @@ dsh plugin --profile web remove maa-dsh-skill
 
 | 文档 | 说明 |
 | --- | --- |
-| [README-full.md](./README-full.md) | **完整指引**：安装、分发、Full Access 权限、使用、验证 |
+| [README-full.md](./README-full.md) | **完整指引**：安装、分发、Full Access 权限、配置文件与修改、使用、验证 |
 | [PACKAGING.md](./PACKAGING.md) | 打包发布方法 |
 | [SKILL.md](./SKILL.md) | 技能使用说明（面向 AI 助手的完整流程与命令参考） |
 

@@ -3,7 +3,7 @@ name: maa-dsh-skill
 description: 使用 MaaAssistantArknights (MAA) 官方命令行工具 maa-cli 驱动 MaaCore 自动完成《明日方舟》游戏任务：刷关卡 (fight)、集成战略 (roguelike)、生息演算 (reclamation)、自动抄作业 (copilot / sscopilot / paradoxcopilot)、启动与关闭游戏客户端 (startup / closedown)，以及自定义任务编排 (run)、MaaCore 与资源安装更新 (install / update)、配置管理 (init / import / profiles / tasks)。跨平台（Windows / Linux / macOS）。当用户要求用 MAA 自动化明日方舟、安装或管理 MAA 及其 CLI、编写自定义任务配置、排查 ADB/模拟器连接问题时使用。
 whenToUse: 用户要求自动化《明日方舟》日常任务（刷图、肉鸽、生息演算、抄作业、基建、公招等），或要求安装、更新、配置 MAA / maa-cli / MaaCore，或要求排查 MAA 连接与运行问题时，加载本技能并按其中流程执行。
 metadata:
-  version: "v0.0.1"
+  version: "v0.0.2"
   maa-cli-docs: https://github.com/MaaAssistantArknights/maa-cli/tree/main/crates/maa-cli/docs
   compatible:
     maa-cli: "v0.7.5"
@@ -12,7 +12,7 @@ metadata:
 
 # maa-dsh-skill — 明日方舟自动化
 
-> 📦 **技能版本：v0.0.1**，适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）。
+> 📦 **技能版本：v0.0.2**，适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）。
 
 本技能指导你在 DeepSeek Harness 环境中，通过 MAA 官方命令行工具 **maa-cli** 驱动 **MaaCore**，自动化完成《明日方舟》游戏任务，并覆盖 Windows / Linux / macOS 三个平台的安装、配置与使用。
 
@@ -535,7 +535,7 @@ maa roguelike Phantom --disable-investment
 需要把本技能打包为可分发的压缩包（如发布新版本、拷贝到其它电脑）时，**直接参考本目录下的 `PACKAGING.md`**（打包方法与完整命令，含 zip 命名规则、顶层目录名 `maa-dsh-skill`、放置位置等）。打包前记得：
 
 1. 更新 `SKILL.md` frontmatter 的 `metadata.version` 与正文首行的技能版本号（README 中的版本号同步更新）；
-2. 打包目录名与 zip 文件名中的版本号保持一致（如 `v0.0.1` → `MAA-dsh-skill-v0.0.1.zip`）；
+2. 打包目录名与 zip 文件名中的版本号保持一致（如 `v0.0.2` → `MAA-dsh-skill-v0.0.2.zip`）；
 3. 打包后先解压到临时目录验证结构（顶层目录应为 `maa-dsh-skill`），再分发。
 
 ## 12. 用户默认选项

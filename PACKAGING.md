@@ -6,14 +6,15 @@
 
 | 项 | 规则 |
 | --- | --- |
-| zip 文件名 | `MAA-dsh-skill-v<版本>.zip`，如 `MAA-dsh-skill-v0.0.1.zip` |
+| zip 文件名 | `MAA-dsh-skill-v<版本>.zip`，如 `MAA-dsh-skill-v0.0.2.zip` |
 | 解压后顶层目录名 | **`maa-dsh-skill`**（zip 内所有文件位于 `maa-dsh-skill/` 下） |
 | 放置位置 | 由发布者指定；本机惯例为桌面新建的发布文件夹（如 `Desktop\MAA-dsh-skill-release\`） |
 
 ## 2. 打包前检查清单
 
 1. **版本号一致**：以下位置的版本号必须与将要发布的版本一致：
-   - `SKILL.md` frontmatter：`metadata.version`
+   - `package.json`：`version` 字段（**必须为纯 semver，如 `0.0.1`，不带 `v` 前缀**——dsh-market 等工具显示已安装版本时会自动加 `v`，写成 `v0.0.1` 会显示成 `vv0.0.1`）
+   - `SKILL.md` frontmatter：`metadata.version`（展示用，可带 `v` 前缀）
    - `SKILL.md` 正文首行「技能版本：…」
    - `README.md` 与 `README-full.md` 首行「技能版本：…」
    - 打包目录名 / zip 文件名
@@ -28,10 +29,10 @@ Select-String -Path SKILL.md,README.md,README-full.md -Pattern "0\.0\.1-rc" | Fo
 
 ## 3. 打包步骤（Windows PowerShell 示例）
 
-以发布 `v0.0.1` 为例（把 `$version` 换成实际版本号即可复用）：
+以发布 `v0.0.2` 为例（把 `$version` 换成实际版本号即可复用）：
 
 ```powershell
-$version = "vv0.0.1"
+$version = "v0.0.2"
 $skillSrc = "C:\Users\test\.dsh\skills\maa-dsh-skill"                      # 技能源目录
 $desktop  = [Environment]::GetFolderPath('Desktop')
 $release  = Join-Path $desktop "MAA-dsh-skill-release"                    # 桌面发布文件夹（可自定义）
@@ -69,7 +70,7 @@ Remove-Item $verify -Recurse -Force
 ## 4. Linux / macOS（bash 示例）
 
 ```bash
-version="v0.0.1"
+version="v0.0.2"
 skill_src="$HOME/.dsh/skills/maa-dsh-skill"
 release="$HOME/Desktop/MAA-dsh-skill-release"
 stage="$(mktemp -d)"

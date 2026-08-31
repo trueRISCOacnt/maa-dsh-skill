@@ -2,17 +2,30 @@
 //
 // 安装方式：dsh plugin --profile <profile名> add maa-dsh-skill（或本地目录 / .tgz）
 // 作用：
-//   1) 启动时打印加载日志（验证插件层已生效）；
+//   1) 启动时打印加载日志（验证插件层已生效；默认关闭，配置 showStartupLogs=true 开启）；
 //   2) 把本包内的 SKILL.md 注册为「运行时技能」写入 ctx.skills 注册表，
 //      使 AI 助手在会话中可直接加载该技能（资源目录指向包内目录）。
 //      若同名技能已由其它来源（如 skill 发现根中的文件系统技能）提供，
 //      注册会被注册表忽略 —— 文件系统方式优先，两者互不冲突。
+//   3) 配置项 showStartupLogs（默认 false）：控制是否打印
+//      "Skill loaded!" 与 skill registered 两行启动日志。
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import z from "@deepseek-ai/schemastery";
 
 export const name = "maa-dsh-skill";
 export const inject = ["skills"];
+
+/**
+ * 插件配置（在 profile 的 cordis.patch.yml 中以
+ * `- id: maa-dsh-skill` + `config:` 覆盖，见 README.md「配置」）。
+ * showStartupLogs：启动时是否打印 "Skill loaded!" 与
+ * `skill "maa-dsh-skill" registered` 两行日志，默认 false（不打印）。
+ */
+export const Config = z.object({
+	showStartupLogs: z.boolean().default(false),
+});
 
 const packageDir = dirname(fileURLToPath(import.meta.url));
 const skillPath = join(packageDir, "SKILL.md");
@@ -53,8 +66,12 @@ function log(...args) {
 	}
 }
 
-export function apply(ctx) {
-	log("Skill loaded!");
+export function apply(ctx, config) {
+	const showStartupLogs = config?.showStartupLogs === true;
+	const startupLog = (...args) => {
+		if (showStartupLogs) log(...args);
+	};
+	startupLog("Skill loaded!");
 	let skill;
 	try {
 		skill = loadSkill();
@@ -76,7 +93,7 @@ export function apply(ctx) {
 				path: skillPath,
 				resourceBase: { kind: "directory", path: packageDir }
 			});
-			log(`skill "${skill.name}" registered (from ${skillPath})`);
+			startupLog(`skill "${skill.name}" registered (from ${skillPath})`);
 		} catch (error) {
 			log("skill registration failed:", error?.message ?? String(error));
 		}
