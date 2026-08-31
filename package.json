@@ -1,6 +1,6 @@
 {
   "name": "maa-dsh-skill",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "MAA (MaaAssistantArknights) automation skill for DeepSeek Harness — drives maa-cli / MaaCore to automate Arknights tasks (fight, roguelike, reclamation, copilot, infrast, recruit, ...).",
   "type": "module",
   "main": "index.js",
@@ -37,7 +37,7 @@
     "type": "git",
     "url": "git+https://github.com/trueRISCOacnt/maa-dsh-skill.git"
   },
-  "keywords": [],
+  "keywords": ["ai-agent","ai-assistant","automation","game-automation","arknights","maa","maa-cli","maacore","deepseek-harness","dsh","dsh-plugin","dsh-skill"],
   "bugs": {
     "url": "https://github.com/trueRISCOacnt/maa-dsh-skill/issues"
   },

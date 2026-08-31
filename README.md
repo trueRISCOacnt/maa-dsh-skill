@@ -1,6 +1,6 @@
 # MAA-dsh-skill
 
-> 📦 **v0.0.2** ｜ 适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）｜ Windows / Linux / macOS
+> 📦 **v0.0.3** ｜ 适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）｜ Windows / Linux / macOS
 
 基于 [MaaAssistantArknights (MAA)](https://github.com/MaaAssistantArknights/MaaAssistantArknights) 官方命令行工具 [maa-cli](https://github.com/MaaAssistantArknights/maa-cli) 构建的 **DeepSeek Harness Skill**：让 AI 助手直接驱动 MaaCore，自动化完成《明日方舟》日常任务。
 
@@ -21,13 +21,13 @@
 
 ### 方式一：使用 npm 安装（DSH 插件 Bundle）
 
-仅需一段命令：
+仅需一段命令：（推荐）
 
 ```bash
-dsh plugin --profile web add github:trueRISCOacnt/maa-dsh-skill
+dsh plugin --profile web add maa-dsh-skill
 ```
 
-`github:trueRISCOacnt/maa-dsh-skill`为 registry 包名；也支持本地目录 / .tgz
+`maa-dsh-skill`为 registry 包名；也支持本地目录 / .tgz
 
 检查是否已安装：
 

@@ -1,6 +1,6 @@
 # MAA-dsh-skill — 完整指引
 
-> 📦 **技能版本：v0.0.2**，适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）。
+> 📦 **技能版本：v0.0.3**，适用于 **maa-cli v0.7.5**（对应 **MAA v6.11.0 及以后**）。
 >
 > 📄 本文档是**完整指引**（原 README，随版本保留为详细说明）；简版项目 README（含部署方式）见 [`README.md`](./README.md)。
 
@@ -63,6 +63,12 @@ maa-dsh-skill/                          # 解压后顶层目录（= 安装到 .d
 **推荐使用这种方式：**
 
 ```bash
+dsh plugin --profile web add maa-dsh-skill
+```
+
+使用 GitHub 源下载：
+
+```bash
 dsh plugin --profile web add github:trueRISCOacnt/maa-dsh-skill
 ```
 
@@ -75,7 +81,7 @@ dsh plugin --profile web add ./maa-dsh-skill
 使用 npm tarball 方式安装：
 
 ```bash
-dsh plugin --profile web add ./maa-dsh-skill-0.0.2.tgz
+dsh plugin --profile web add ./maa-dsh-skill-0.0.3.tgz
 ```
 
 （`web` 为默认 profile 名，首次使用会自动初始化；安装成功且包声明了 `dsh.bundle` 时，`dsh plugin` 会自动把包加入 profile 的 `dsh.profile.bundles` 层列表。）
@@ -299,20 +305,20 @@ MAA 自动化需要**通过 ADB 控制模拟器**（截图、点击、启动游�
 
 ### 更改版本号时需修改的文件与位置
 
-当前版本为 **v0.0.2**。升级 / 发布新版本时，需把下表所有位置的版本号**同步更新**（行号为当前版本的行号，文档变动后请按「位置」描述定位）：
+当前版本为 **v0.0.3**。升级 / 发布新版本时，需把下表所有位置的版本号**同步更新**（行号为当前版本的行号，文档变动后请按「位置」描述定位）：
 
 | 文件 | 位置 |
 | --- | --- |
 | `package.json` | `version` 字段（第 3 行）——**必须为纯 semver（如 `0.0.1`），不带 `v` 前缀**：dsh-market 等工具显示已安装版本时会自动加 `v`，若写成 `v0.0.1` 会显示成 `vv0.0.1` |
 | `SKILL.md` | frontmatter `metadata.version`（第 6 行） |
 | `SKILL.md` | 正文首行「技能版本：…」徽标（第 15 行） |
-| `SKILL.md` | 第 11 节「打包发布」示例 `v0.0.2` → `MAA-dsh-skill-v0.0.2.zip`（第 538 行） |
-| `README.md` | 首行版本徽标 `v0.0.2`（第 3 行） |
+| `SKILL.md` | 第 11 节「打包发布」示例 `v0.0.3` → `MAA-dsh-skill-v0.0.3.zip`（第 538 行） |
+| `README.md` | 首行版本徽标 `v0.0.3`（第 3 行） |
 | `README-full.md`（本文件） | 首行「技能版本：…」徽标（第 3 行） |
-| `README-full.md`（本文件） | 「部署方式」中 tarball 安装示例 `maa-dsh-skill-0.0.2.tgz`（npm pack 按 package.json 纯 semver 生成，不带 `v`） |
-| `PACKAGING.md` | 第 1 节 zip 命名示例 `MAA-dsh-skill-v0.0.2.zip`（第 9 行） |
-| `PACKAGING.md` | 第 3 节 PowerShell 示例 `$version = "v0.0.2"`（第 35 行） |
-| `PACKAGING.md` | 第 4 节 bash 示例 `version="v0.0.2"`（第 73 行） |
+| `README-full.md`（本文件） | 「部署方式」中 tarball 安装示例 `maa-dsh-skill-0.0.3.tgz`（npm pack 按 package.json 纯 semver 生成，不带 `v`） |
+| `PACKAGING.md` | 第 1 节 zip 命名示例 `MAA-dsh-skill-v0.0.3.zip`（第 9 行） |
+| `PACKAGING.md` | 第 3 节 PowerShell 示例 `$version = "v0.0.3"`（第 35 行） |
+| `PACKAGING.md` | 第 4 节 bash 示例 `version="v0.0.3"`（第 73 行） |
 
 > ⚠️ 注意：`PACKAGING.md` 第 2 节的「版本号快速检查」命令只扫描 `SKILL.md`、`README.md`、`README-full.md` 三个 Markdown 文件，**不覆盖 `package.json` 及 `PACKAGING.md` 中的示例**，改完后请自行核对上表所有位置。
 >
